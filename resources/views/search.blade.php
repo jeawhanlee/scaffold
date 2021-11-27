@@ -12,10 +12,10 @@
                     <input type="hidden" name="search" value="{{$search}}" />
                     <select class="form-select rounded-0" name="sort">
                         <option selected>Sort By</option>
-                        <option value="name_asc">Name - Ascending</option>
-                        <option value="name_desc">Name - Descending</option>
-                        <option value="price_asc">Price - Ascending</option>
-                        <option value="price_desc">Price - Descending</option>
+                        <option value="name_asc" {{$sort == "name_asc" ? "selected" : ""}}>Name - Ascending</option>
+                        <option value="name_desc" {{$sort == "name_desc" ? "selected" : ""}}>Name - Descending</option>
+                        <option value="price_asc" {{$sort == "price_asc" ? "selected" : ""}}>Price - Ascending</option>
+                        <option value="price_desc" {{$sort == "price_desc" ? "selected" : ""}}>Price - Descending</option>
                     </select>
 
                     <button type="submit" class="btn btn-primary rounded-0">Sort</button>

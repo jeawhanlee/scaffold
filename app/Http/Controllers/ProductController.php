@@ -47,14 +47,18 @@ class ProductController extends Controller
     }
 
     public function getProduct(Categories $categories, Request $request){
-        $appends = [];
+
+        $sub_cat = "";
+        $sub_cat_value = "";
+        $sort_action = "/$categories->id";
 
         if($request->subcat){
-            $appends["subcat"] = "issubcat";
             $products = Products::where("category_id", $categories->id)
                                     ->orderBy($this->column, $this->direction)
                                     ->paginate(5);
-            $sort_action = "/$categories->id?subcat=issubcat";
+
+            $sub_cat = "subcat";
+            $sub_cat_value = "issubcat";
         }
         else{
             $products = Categories::join('products', 'categories.id', '=', 'products.category_id')
@@ -62,15 +66,16 @@ class ProductController extends Controller
                                 ->where('parent_id', $categories->id)
                                 ->orderBy($this->column, $this->direction)
                                 ->paginate(5);
-            
-            $sort_action = "/$categories->id";
         }
 
         $products->appends($this->appends);
 
         return view("products",[
             "products" => $products,
-            "sort_action" => $sort_action
+            "sort_action" => $sort_action,
+            "subcat" => $sub_cat,
+            "subcat_value" => $sub_cat_value,
+            "sort" => isset($this->appends["sort"]) ? $this->appends["sort"] : ""
         ]);
     }
 
@@ -98,7 +103,8 @@ class ProductController extends Controller
 
         return view("search",[
             "products" => $products,
-            "search" => $search
+            "search" => $search,
+            "sort" => isset($this->appends["sort"]) ? $this->appends["sort"] : ""
         ]);
     }
 }
