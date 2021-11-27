@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function getProduct(Categories $categories){
-        $products = Products::get()->where("category_id", $categories->id);
+        $products = Products::where("category_id", $categories->id)->paginate(5);
 
         return view("products",[
             "products" => $products
@@ -31,7 +31,9 @@ class ProductController extends Controller
         $products = Products::query()
             ->where('name', 'LIKE', "%{$search}%")
             ->orWhere('description', 'LIKE', "%{$search}%")
-            ->get();
+            ->paginate(5);
+
+        $products->appends(['search' => $search]);
 
         return view("search",[
             "products" => $products,
