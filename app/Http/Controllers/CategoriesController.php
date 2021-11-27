@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class CategoriesController extends Controller
 {
     public function index(){
-        $categories = Categories::get();
+        $categories = Categories::get()->where("parent_id", "");
 
         return view("categories",[
             "categories" => $categories
