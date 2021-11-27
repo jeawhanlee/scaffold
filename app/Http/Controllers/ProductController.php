@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Products;
 use App\Model\Categories;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -51,6 +52,7 @@ class ProductController extends Controller
         $sub_cat = "";
         $sub_cat_value = "";
         $sort_action = "/$categories->id";
+        $sub_cats = new Collection();
 
         if($request->subcat){
             $products = Products::where("category_id", $categories->id)
@@ -59,6 +61,7 @@ class ProductController extends Controller
 
             $sub_cat = "subcat";
             $sub_cat_value = "issubcat";
+            $this->appends["subcat"] = "issubcat";
         }
         else{
             $products = Categories::join('products', 'categories.id', '=', 'products.category_id')
@@ -66,6 +69,8 @@ class ProductController extends Controller
                                 ->where('parent_id', $categories->id)
                                 ->orderBy($this->column, $this->direction)
                                 ->paginate(6);
+
+            $sub_cats = Categories::get()->where("parent_id", $categories->id);
         }
 
         $products->appends($this->appends);
@@ -75,7 +80,9 @@ class ProductController extends Controller
             "sort_action" => $sort_action,
             "subcat" => $sub_cat,
             "subcat_value" => $sub_cat_value,
-            "sort" => isset($this->appends["sort"]) ? $this->appends["sort"] : ""
+            "sort" => isset($this->appends["sort"]) ? $this->appends["sort"] : "",
+            "sub_cats" => $sub_cats,
+            "cat_name" => $categories->name
         ]);
     }
 

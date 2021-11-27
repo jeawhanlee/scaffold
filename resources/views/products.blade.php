@@ -7,7 +7,7 @@
     <div class="container">
         @if($products->count())
             <div class="d-flex justify-content-between mb-4">
-                <h3>Products</h3>
+                <h3>{{$cat_name}}</h3>
                 <form method="get" action="{{route('categories')}}{{$sort_action}}" class="d-flex">
                     <input type="hidden" name="{{$subcat}}" value="{{$subcat}}" />
                     <select class="form-select rounded-0" name="sort" required>
@@ -22,6 +22,23 @@
                 </form>
             </div>
         @endif
+
+        
+        @if($sub_cats->count())
+            <div class="row mb-4">
+                @foreach($sub_cats as $sub_cat)
+                    <div class="col-md-2">
+                        <div class="card text-white bg-dark mb-2">
+                            <div class="card-body">
+                                <h5 class="card-title">{{$sub_cat->name}}</h5>
+                                <a class="text-warning" href="{{route('category',$sub_cat->id)}}?subcat=issubcat" class="card-link">View Products</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+        
 
         <div class="row">
             @if($products->count())

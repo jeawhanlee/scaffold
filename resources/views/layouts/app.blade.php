@@ -70,15 +70,15 @@
     </head>
     <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="https://scaffold.digital">SCAFFOLD</a>
+        <div class="container">
+            <a class="navbar-brand" href="{{url('/')}}">Scaffold</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{route('categories')}}">All Categories</a>
+                    <li class="nav-item me-4">
+                    <a class="nav-link active text-success" aria-current="page" href="{{route('categories')}}">All Categories</a>
                     </li>
                 </ul>
                 <form class="d-flex" action="{{route('search')}}" method="get">
