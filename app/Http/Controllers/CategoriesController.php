@@ -16,11 +16,12 @@ class CategoriesController extends Controller
         ]);
     }
 
-    public function singleCategory(Categories $categories){
-        $products = Products::get()->where("category_id", $categories->id);
+    public function getSubCategory(Categories $categories){
+        $sub_cat = Categories::get()->where("parent_id", $categories->id);
 
-        return view("products",[
-            "products" => $products
+        return view("sub_categories",[
+            "parent_cat" => $categories->name,
+            "sub_cats" => $sub_cat
         ]);
     }
 }

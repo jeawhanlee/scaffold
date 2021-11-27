@@ -15,8 +15,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{$prod->name}}</h5>
                                 <h5 class="card-title">&#163;{{number_format($prod->price, 2)}}</h5>
-                                <a href="" class="card-link">View Details</a>
-                                <!-- <a href="#" class="card-link">Another link</a> -->
+                                <a href="{{route('product',$prod->id)}}" class="card-link">Product Details</a>
                             </div>
                         </div>
                     </div>
