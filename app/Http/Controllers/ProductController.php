@@ -24,16 +24,52 @@ class ProductController extends Controller
     }
 
     public function searchProducts(Request $request){
+        $search = $request->search;
+        $allowed_sorts = ["name_asc","name_desc","price_asc","price_desc"];
 
-        $search = $request->input('search');
+        $column = "id";
+        $direction = "DESC";
+
+        $appends = ["search" => $search];
+
+        if($request->sort){
+            if(!in_array($request->sort, $allowed_sorts)){
+                return response('Not Allowed', 500);
+            }
+
+            $appends["sort"] = $request->sort;
+
+            switch ($request->sort){
+                case "name_asc":
+                    $column = "name";
+                    $direction = "ASC";
+                break;
+
+                case "name_desc":
+                    $column = "name";
+                    $direction = "DESC";
+                break;
+
+                case "price_asc":
+                    $column = "price";
+                    $direction = "ASC";
+                break;
+
+                case "price_desc":
+                    $column = "price";
+                    $direction = "DESC";
+                break;
+            }
+        }
 
         // Search in the name and description columns
         $products = Products::query()
             ->where('name', 'LIKE', "%{$search}%")
             ->orWhere('description', 'LIKE', "%{$search}%")
+            ->orderBy($column, $direction)
             ->paginate(5);
 
-        $products->appends(['search' => $search]);
+        $products->appends($appends);
 
         return view("search",[
             "products" => $products,

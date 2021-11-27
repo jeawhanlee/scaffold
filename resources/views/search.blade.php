@@ -6,7 +6,21 @@
 @section("content")
     <div class="container">
         @if($products->count())
-            <h3>Search result for <strong><i>"{{ $search }}"</i></strong></h3>
+            <div class="d-flex justify-content-between mb-4">
+                <h3>Search result for <strong><i>"{{ $search }}"</i></strong></h3>
+                <form method="get" action="{{route('search')}}" class="d-flex">
+                    <input type="hidden" name="search" value="{{$search}}" />
+                    <select class="form-select rounded-0" name="sort">
+                        <option selected>Sort By</option>
+                        <option value="name_asc">Name - Ascending</option>
+                        <option value="name_desc">Name - Descending</option>
+                        <option value="price_asc">Price - Ascending</option>
+                        <option value="price_desc">Price - Descending</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-primary rounded-0">Sort</button>
+                </form>
+            </div>
         @endif
         
         <div class="row">
