@@ -5,7 +5,7 @@
 
 @section("content")
     <div class="container">
-        <h3>Sub Categories from {{$parent_cat}}</h3>
+        <h3>Sub Categories from <strong><i>{{$parent_cat}}</i></strong></h3>
         
         <div class="row">
             @if($sub_cats->count())

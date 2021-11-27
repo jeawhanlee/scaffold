@@ -22,4 +22,20 @@ class ProductController extends Controller
             "product" => $product
         ]);
     }
+
+    public function searchProducts(Request $request){
+
+        $search = $request->input('search');
+
+        // Search in the name and description columns
+        $products = Products::query()
+            ->where('name', 'LIKE', "%{$search}%")
+            ->orWhere('description', 'LIKE', "%{$search}%")
+            ->get();
+
+        return view("search",[
+            "products" => $products,
+            "search" => $search
+        ]);
+    }
 }
