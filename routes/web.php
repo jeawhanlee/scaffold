@@ -13,6 +13,7 @@ use App\Http\Controllers\CategoriesController;
 |
 */
 Route::get("/categories", [CategoriesController::class, 'index'])->name("categories");
+Route::get("/categories/{categories}", [CategoriesController::class, 'singleCategory'])->name("category");
 
 Route::get('/', function () {
     return view('welcome');
