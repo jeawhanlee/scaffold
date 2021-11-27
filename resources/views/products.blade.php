@@ -5,7 +5,23 @@
 
 @section("content")
     <div class="container">
-        
+        @if($products->count())
+            <div class="d-flex justify-content-between mb-4">
+                <h3>Products</h3>
+                <form method="get" action="{{route('categories')}}{{$sort_action}}" class="d-flex">
+                    <select class="form-select rounded-0" name="sort">
+                        <option selected>Sort By</option>
+                        <option value="name_asc">Name - Ascending</option>
+                        <option value="name_desc">Name - Descending</option>
+                        <option value="price_asc">Price - Ascending</option>
+                        <option value="price_desc">Price - Descending</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-primary rounded-0">Sort</button>
+                </form>
+            </div>
+        @endif
+
         <div class="row">
             @if($products->count())
                 @foreach($products as $prod)

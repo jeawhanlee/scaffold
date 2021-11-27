@@ -14,7 +14,7 @@
                         <div class="card mb-2" style="width: 19rem;">
                             <div class="card-body">
                                 <h5 class="card-title">{{$sub_cat->name}}</h5>
-                                <a href="{{route('category',$sub_cat->id)}}" class="card-link">View Products</a>
+                                <a href="{{route('category',$sub_cat->id)}}?subcat=issubcat" class="card-link">View Products</a>
                             </div>
                         </div>
                     </div>
