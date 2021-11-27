@@ -17,7 +17,7 @@ class ProductController extends Controller
 
         if($request->sort){
             if(!in_array($request->sort, $allowed_sorts)){
-                return response('Not Allowed', 500);
+                abort(404);
             }
 
             $this->appends["sort"] = $request->sort;
@@ -65,7 +65,7 @@ class ProductController extends Controller
                                 ->with('children')
                                 ->where('parent_id', $categories->id)
                                 ->orderBy($this->column, $this->direction)
-                                ->paginate(5);
+                                ->paginate(6);
         }
 
         $products->appends($this->appends);
@@ -89,15 +89,19 @@ class ProductController extends Controller
     public function searchProducts(Request $request){
         $search = $request->search;
         
-
         $this->appends["search"] = $search;
+
+        // redirect to categories page if search is empty
+        if($search == ""){
+            return redirect()->route("categories");
+        }
 
         // Search in the name and description columns
         $products = Products::query()
             ->where('name', 'LIKE', "%{$search}%")
             ->orWhere('description', 'LIKE', "%{$search}%")
             ->orderBy($this->column, $this->direction)
-            ->paginate(5);
+            ->paginate(6);
 
         $products->appends($this->appends);
 
